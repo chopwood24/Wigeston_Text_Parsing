@@ -30,8 +30,10 @@ def extract_details(entry_text):
     entry_number_match = re.search(r'^\d+', entry_text)
     if entry_number_match:
         details['entry_number'] = entry_number_match.group()
+    # Extract date (first 60 characters after entry number)
     start_date = len(details['entry_number']) + 1
     details['date'] = entry_text[start_date:start_date + 60].strip()
+    # Attempt to extract location within 100 characters after the date
     location_match = re.search(r'(?:\]|\.)\s+([a-zA-Z-\s]{4,})\.', entry_text[start_date:start_date + 100])
     if location_match:
         details['location'] = re.sub(r'\s+', '', location_match.group(1))
@@ -39,6 +41,7 @@ def extract_details(entry_text):
     else:
         details['location'] = 'NA'
         end_location = start_date + 60
+    # Extracting the description (rest of the entry)
     details['description'] = entry_text[end_location:].strip()
     return details
 
