@@ -7,7 +7,7 @@ fhand1 = open(textfile)
 wholefile = ""
 startposition = 0
 
-header = "number|text|\n"
+header = "number|text|date|\n"
 outputtext = header
 
 t= 0
@@ -29,10 +29,16 @@ while i < 1155:
         section = wholefile[startposition:endposition]
         section = section.replace("\n", " ")
 
-        outputtext = outputtext + str(i-1) + "|" + section + "|\n"
+        #date text
+        numberlength = len(searchtarget)
+        datephrase = section[numberlength:10+numberlength]
+
+
+
+        outputtext = outputtext + str(i-1) + "|" + section + "|" + datephrase + "|\n"
         startposition = endposition
         i += 1
-        print (i, len(section))
+        print (i, len(section), datephrase)
 
     else:
         print ("skipped", i, startposition, wholefile[startposition:100]) 
@@ -43,7 +49,6 @@ while i < 1155:
         
         exit()
 
-    #print (outputtext)
 
 print ("complete")
 
